@@ -29,58 +29,49 @@ async function getUsers(){
 <!-- ########################################## -->
 
 <nav>
-  <!-- <div>C</div>
-  <div class="searchContainer">
-    <form>
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Seach on Clonebook ..." bind:value="{txtSearch}" on:input="{getUsers}" on:focus="{getUsers}" on:blur="{hideSearchResults}">
-    </form>
-    <div style="display: {boxSearchResultsDisplay}" class="searchResultsContainer">
-        {#each ajUsers as jUser }
-            <div>{jUser.name} {jUser.lastName}</div>
-        {/each }
+    <div class="nav left">
+        <div class="icon">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+        </div>
+        <div class="searchbar">
+            <form>
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Seach on Clonebook ..." bind:value="{txtSearch}" on:input="{getUsers}" on:focus="{getUsers}" on:blur="{hideSearchResults}">
+            </form>
+            <div style="display: {boxSearchResultsDisplay}" class="results">
+                {#each ajUsers as jUser }
+                    <div>{jUser.name} {jUser.lastName}</div>
+                {/each }
+            </div>
+        </div>
+    </div> 
+    <div class="nav center">
+        <div class="tab">
+            <i class="fas fa-house-user"style="color: rgb(79, 207, 197);"></i>
+            <div class="active" style="opacity: 1"></div>
+        </div>
+        <div class="tab">
+            <i class="fas fa-shopping-basket" style="color: rgb(128, 128, 128)"></i>
+            <div class="active" style="opacity: 0"></div></div>
+        <div class="tab">
+            <i class="fas fa-users" style="color: rgb(128, 128, 128)"></i>
+            <div class="active" style="opacity: 0"></div>
+        </div>
     </div>
-  </div>
-        <div>Louise</div>
-        <div>Home</div>
-        <div>Create</div>
-  <div><i class="fas fa-user-friends"></i></div>
-  <div><i class="far fa-comment-alt"></i></div>
-  <div><i class="far fa-bell"></i></div>
-  <div><i class="far fa-question-circle"></i></div>
-  <div><i class="fas fa-sort-down"></i></div> -->
-
-
-
-  <div class="navC1">
-    <div>Clonebook</div>
-    <div class="searchContainer">
-    <form>
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Seach on Clonebook ..." bind:value="{txtSearch}" on:input="{getUsers}" on:focus="{getUsers}" on:blur="{hideSearchResults}">
-    </form>
-
-    <div style="display: {boxSearchResultsDisplay}" class="searchResultsContainer">
-        {#each ajUsers as jUser }
-            <div>{jUser.name} {jUser.lastName}</div>
-        {/each }
+    <div class="nav right"> 
+        <div>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div>
+            <i class="far fa-comment-alt"></i>
+        </div>
+        <div>
+            <i class="far fa-bell"></i>
+        </div>
+        <div>
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </div>
     </div>
-  </div>
-  </div> 
-  <div class="navC2">
-    <i class="fas fa-house-user"></i>
-    <i class="far fa-flag"></i>
-    <i class="far fa-play-circle"></i>
-    <i class="fas fa-shopping-basket"></i>
-    <i class="fas fa-users"></i>
-  </div>
-  <div class="navC3">
-    <i class="fas fa-plus"></i>
-    <i class="far fa-comment-alt"></i>
-    <i class="far fa-bell"></i>
-    <i class="fas fa-sort-down"></i>
-  </div>
-
 </nav> 
 
 
@@ -90,47 +81,52 @@ async function getUsers(){
 <style>
     nav {
         display: grid;
-        /* grid-template-columns: 5fr 20fr 10fr 10fr 10fr 2fr 2fr 2fr 2fr 3fr; */
         grid-template-columns: 10fr 20fr 10fr;
         grid-gap: 0.2rem;
         align-items: center;
-        
         width: 100%;
-        height: 4rem;
-        padding: 0px 0.5rem;
-        color: black;
+        min-height: 5rem;
+        padding: 0 0.5rem;
+        color: #333;
         background: white;
-        /* background: #4267b2; */
-        box-shadow: 0 1px 7px rgba(155, 155, 155, 0.12), 0 1px 2px rgba(155, 155, 155, 0.12);
+        box-shadow: 0 1px 7px rgba(143, 143, 143, 0.12)
     }
-    .navC1 {
+    nav div {
         display: grid;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+    .left {
         grid-template-columns: 1fr 5fr;
+        grid-gap: 0.5rem
     }
-    .navC2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            max-width: 400px;
-            margin: 0 auto;
-            grid-gap: 50px;
-    }
-    .navC3 {
+    .left .icon {
+        background-color: rgb(79, 207, 197);
+        color: white;
+        font-size: 1.5rem;
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        height: 3.3rem;
+        width: 3.3rem;
     }
-    nav form i {
+    .left .searchbar {
+        width: 100%;
+        justify-content: stretch;
+    }
+    .searchbar i {
         position: absolute;
-        top: 8px;
-        left: 11px;
+        margin: 1.2rem;
+        font-size: 1rem;
+        color: rgb(138, 137, 137)
     }
-    nav form input {
-        padding-left: 33px;
-        height: 35px;
+    .searchbar input {
+        padding-left: 4rem;
+        height: 3.3rem;
     }
-    nav div.searchContainer {
-        position: relative;
-    }
-    nav div.searchResultsContainer {
+    .searchbar .results {
         position: absolute;
         width: 100%;
         height: 10rem;
@@ -139,6 +135,41 @@ async function getUsers(){
         border: 1px solid #999;
         border-top: none;
         padding: 0px 0.2rem;
+        
+    }
+    .center {
+        display: flex;
+        justify-content: space-around;
+        height: 100%;
+    }
+    .center .tab {
+        width: 100%;
+        height: 100%;
+        align-items: flex-end
+    } 
+    .center .tab i {
+        font-size: 1.5rem;
+        color: rgb(128, 128, 128) 
+    }
+    .center .tab .active{
+        height: 3px;
+        width: 140px;
+        background: rgb(79, 207, 197);
+        border-radius: 2px 2px 0 0
+    }
+    .right {
+        display: grid;
+        grid-template-columns:  1fr 1fr 1fr 1fr;
+        column-gap: 2rem;
+        margin: 0 3rem 0 auto;
+        font-size: 1.2rem;
+        color: #333
+    }
+    .right div {
+        height: 3rem;
+        width: 3rem;
+        background-color: rgb(212, 212, 212);
+        border-radius: 30px;
         
     }
 </style>

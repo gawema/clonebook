@@ -23,22 +23,22 @@
 <!-- ############################## -->
 
 <section>
-	{#each ajFriends as jFriend}
+	<!-- {#each ajFriends as jFriend}
 		<div class="friend" on:click="{showChatWindow}">:) {jFriend.name} {jFriend.lastName}</div>
-	{/each}
+	{/each} -->
 </section>
 
 <!-- ############################## -->
 
 <style>
-	section{
+	/* section{
 		position: fixed;
 		top: 0px;
 		right: 0px;
 		width: 15rem;
 		height: 100%;
 		background: gray;
-	}
+	} */
 	/* ugly - should show a nice hand so users know that they have to click */
 	div.friend{
 		cursor: pointer;
