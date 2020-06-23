@@ -1,9 +1,26 @@
 <script>
-	import Nav from './Nav.svelte'
-	import Timeline from './Timeline.svelte'
-	import Left from './Left.svelte'
-	import Right from './Right.svelte'
-	import {me} from "./data.js"
+	import Nav from './sections/Nav.svelte'
+	import Timeline from './sections/Timeline.svelte'
+	import Left from './sections/Left.svelte'
+	import Right from './sections/Right.svelte'
+	import { onMount } from "svelte"
+	import {me} from "./store.js"
+	import {post_store} from "./store.js"
+	import {getPosts} from "./data.js"
+
+
+	let posts = [];
+	onMount(() => {
+		storePosts();
+	});
+
+	async function storePosts() {
+		$post_store = await getPosts();
+	}
+	
+	post_store.subscribe(data => {
+		posts = data;
+	})
 
 </script>
 
@@ -14,7 +31,9 @@
 	<div>{$me.name} {$me.lastName}</div>
 	<div>
 		<Left />
-		<Timeline />
+	{#if posts}
+		<Timeline posts={posts}/>
+	{/if}
 		<Right />
 	</div>
 

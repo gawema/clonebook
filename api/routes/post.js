@@ -37,6 +37,7 @@ router.post('/', tokenizer.verifyToken, async (req, res) => {
 
 // GET ALL POSTS
 router.get('/', tokenizer.verifyToken, (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
 	try {
 		// INITIALIZING EMPTY ARRAY OF POSTS
 		let posts = [];

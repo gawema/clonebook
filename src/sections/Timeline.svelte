@@ -1,32 +1,15 @@
 <script>
-	import CreatePost from './CreatePost.svelte'
-	import Post from './Post.svelte'
-	import CreatePostModal from './CreatePostModal.svelte'
+	import CreatePost from '../components/CreatePost.svelte'
+	import Post from '../components/Post.svelte'
+	import CreatePostModal from '../components/CreatePostModal.svelte'
+
+	export let posts;
 
 	let showModal = false;
 
 	let toggleModal = () => {
 		showModal = !showModal;
 	};
-
-	let posts = [
-		{
-			text: 'ciao belli',
-			friendId: 111
-		},
-		{
-			text: 'ciao belli',
-			friendId: 222
-		},
-		{
-			text: 'ciao belli',
-			friendId: 333
-		},
-		{
-			text: 'ciao belli',
-			friendId: 111
-		}
-	]
 	
 	let addPost = (event) => {
 		const newPost = event.detail;
@@ -34,13 +17,14 @@
 		showModal = false
 	}
 
+
 </script>
 
 
 <!-- ########################################## -->
 <section>
 	<CreatePostModal {showModal} on:click={toggleModal} on:submit={addPost}/>
-	<CreatePost  on:click={toggleModal}/>
+	<CreatePost on:click={toggleModal}/>
 	{#each posts as post}
 		<Post {post}/>
 	{/each}

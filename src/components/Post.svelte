@@ -1,6 +1,6 @@
 <script>
 	export let post;
-	  import FriendThumbnail from "./FriendThumbnail.svelte"
+	import FriendThumbnail from "./FriendThumbnail.svelte"
 
 </script>
 
@@ -8,7 +8,7 @@
 <!-- ########################################## -->
 
 <div class="post">
-	<FriendThumbnail id='{post.friendId}'/>
+	<!-- <FriendThumbnail id='{post._id}'/> -->
 	<h4>{post.text}</h4>
 </div> 
 

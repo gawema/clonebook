@@ -1,6 +1,6 @@
 <script>
-	import {me} from "./data.js"
-	import FriendThumbnail from "./FriendThumbnail.svelte"
+	import {me} from "../store.js"
+	import FriendThumbnail from "../components/FriendThumbnail.svelte"
 </script>
 
 <!-- ############################## -->

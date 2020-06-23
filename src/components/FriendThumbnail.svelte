@@ -1,7 +1,6 @@
 <script>
-  import {me} from "./data.js"
+  import {me} from "../store.js"
   //  allow to inject content to the variable
-  // import { me as ajFriends } from './data.js';
   export let id
   $: name = $me.friends.find( jFriend => jFriend.id == id ).name
   $: status = $me.friends.find( jFriend=>jFriend.id==id ).status
