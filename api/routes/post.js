@@ -1,45 +1,53 @@
-const express = require("express");
-const router = express.Router();
-
+const router = require("express").Router();
 const tokenizer =  require('../tokenizer');
+const User = require("../models/User")
+
 
 // ROUTES
 router.post('/', tokenizer.verifyToken, async (req, res) => {
 	try {
-		const user = await tokenizer.getUserByToken(req);
-		const userId = new require('mongodb').ObjectID(user._id);
-		const newPost = {title: req.body.title, text: req.body.text, userId: userId}
-		db.collection("posts").insertOne(newPost, (err, user) => {
-			return res.send('post successfully created')
+		const userPayload = await tokenizer.getUserByToken(req);
+		const userId = new require('mongodb').ObjectID(userPayload._id);
+		let user = await User.findById(userId);
+		console.log(user);
+		const newPost = {
+			text: req.body.text
+		}
+		user.posts.push(newPost);
+		user.save()
+		.then(result => {
+			res.send(result);
+		})
+		.catch(error => {
+			console.log(error);
+			return res.status(500).send('db error')
 		});
+
 	} catch (error) {
 		console.log(error);
 	}
 })
 
-router.get('/', tokenizer.verifyToken, (req,res) => {
-	db.collection("posts").find().toArray((err, dbres) => {
-		if(err){console.log("error, cannot read"); return}
-		res.send(dbres)
-	})
-})
+router.get('/', tokenizer.verifyToken, (req, res) => {
 
-router.get('/:postId', tokenizer.verifyToken, (req,res) => {
-	const id = new require('mongodb').ObjectID(req.params.postId);
-	db.collection("posts").findOne({'_id': id}, (err, dbres) => {
-		res.send(dbres)
-	})
-})
-
-router.patch('/:postId', tokenizer.verifyToken, async (req, res) => {
-	const user = await tokenizer.getUserByToken(req);
-	const userId = new require('mongodb').ObjectID(user._id);
-	const id = new require('mongodb').ObjectID(req.params.postId);
-	const post = req.body;
-	delete post.userId
-	db.collection("posts").updateOne({'_id': id, 'userId': userId}, { $set: post }, (err, dbres) => {
+	let posts = [];
+	User.find((err, users) => {
 		if(err){ console.log(err); return; }
-		res.send(dbres);
+		users.forEach(user => {
+			user.posts.forEach(post => {
+				posts.push(post);
+			})
+		})
+		res.send(posts);
+	})
+
+})
+
+router.patch('/like/:postId', tokenizer.verifyToken, async (req, res) => {
+	const id = new require('mongodb').ObjectID(req.params.postId);
+	User.findOne({'posts._id': id }, (err, dbres) => {
+		if(err){ console.log(err); return; }
+		res.send("dbres");
 	});
 })
 
