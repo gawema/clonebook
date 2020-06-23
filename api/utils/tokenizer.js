@@ -7,6 +7,7 @@ function verifyToken(req, res, next) {
         res.sendStatus(403);
 	}
 	token = bearer.split(' ')[1]
+	//temporart secretkey
 	jsonwebtoken.verify(token, 'secretkey', (err, user)=> {
 		if(err){ 
 			return res.sendStatus(403)
@@ -30,7 +31,7 @@ async function getUserByToken(req) {
 
 
 module.exports = {
-verifyToken,
-generateToken,
-getUserByToken
+	verifyToken,
+	generateToken,
+	getUserByToken
 }

@@ -32,6 +32,6 @@ app.listen(3000, err => {
 
 // CHECK IF ERROR,SO NOT CRASHING
 process.on("uncaughtException", (err, data) => {
-    if(err){console.log("Critical error, yet system keeps running")}
+    if(err){console.log(err)}
     return
 })
