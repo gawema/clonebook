@@ -1,12 +1,10 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require('cors')
-const mondodb = require('mongodb')
 const userRoute = require('./routes/user');
 const postRoute = require('./routes/post');
 
 const app = express();
-const mongoClient = mondodb.MongoClient
-const mongoose = require("mongoose");
 
 // MIDDLEWARE
 app.use(cors())
@@ -16,7 +14,6 @@ app.use('/posts', postRoute);
 
 
 //CONNECT TO DB WITH MONGOOSE
-// Mongoose
 mongoose.connect(
     "mongodb://localhost:27017/sveltebook",
     { 
@@ -26,7 +23,6 @@ mongoose.connect(
     }
   );
 
-// CONNECT TO DB
 
 // STARTING SERVER
 app.listen(3000, err => {

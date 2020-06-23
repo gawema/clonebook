@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const tokenizer =  require('../tokenizer');
+const tokenizer =  require('../utils/tokenizer');
 const User = require("../models/User")
 
 
