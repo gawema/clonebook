@@ -1,4 +1,6 @@
 <script>
+
+
 </script>
 
 
@@ -6,9 +8,7 @@
 
 <createPost>
 	<div class="pic"></div>
-	<div class="input">
-		<input type="text" placeholder="What's on your mind, Gabriele?">
-	</div>
+	<div class="input" on:click> a cosa pensi??</div>
 	<div class="line"></div>
 	<div class="media">
 		<i class="fa fa-file-image-o"></i>
@@ -55,10 +55,12 @@
 	}
 	.input {
 		grid-area: input;
-	}
-	.input input {
+		background: #f0f2f5;
+		color: #64666b;
+		border-radius: 30px;
 		height: 40px;
 		padding-left: 2rem;
+		padding-top: 10px;
 	}
 	.line {
 		grid-area: line;

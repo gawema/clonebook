@@ -3,12 +3,15 @@
 	import Timeline from './Timeline.svelte'
 	import Left from './Left.svelte'
 	import Right from './Right.svelte'
+	import {me} from "./data.js"
+
 </script>
 
 <!-- ########################### -->
 
 <main>
 	<Nav />
+	<div>{$me.name} {$me.lastName}</div>
 	<div>
 		<Left />
 		<Timeline />

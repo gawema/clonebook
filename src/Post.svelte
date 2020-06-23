@@ -1,11 +1,15 @@
 <script>
+	export let post;
+	  import FriendThumbnail from "./FriendThumbnail.svelte"
+
 </script>
 
 
 <!-- ########################################## -->
 
-<div>
-
+<div class="post">
+	<FriendThumbnail id='{post.friendId}'/>
+	<h4>{post.text}</h4>
 </div> 
 
 
@@ -13,7 +17,7 @@
 
 
 <style>
-	div{
+	.post{
 		width: 90%;
 		height: 100px;
 		background-color: white;

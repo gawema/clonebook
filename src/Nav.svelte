@@ -47,14 +47,20 @@ async function getUsers(){
     </div> 
     <div class="nav center">
         <div class="tab">
-            <i class="fas fa-house-user"style="color: rgb(79, 207, 197);"></i>
+            <div class="hovertab">
+                <i class="fas fa-house-user"style="color: rgb(79, 207, 197);"></i>            
+            </div>
             <div class="active" style="opacity: 1"></div>
         </div>
         <div class="tab">
-            <i class="fas fa-shopping-basket" style="color: rgb(128, 128, 128)"></i>
+            <div class="hovertab">
+                <i class="fas fa-shopping-basket" style="color: rgb(128, 128, 128)"></i>
+            </div>
             <div class="active" style="opacity: 0"></div></div>
         <div class="tab">
-            <i class="fas fa-users" style="color: rgb(128, 128, 128)"></i>
+            <div class="hovertab">
+                <i class="fas fa-users" style="color: rgb(128, 128, 128)"></i>
+            </div>
             <div class="active" style="opacity: 0"></div>
         </div>
     </div>
@@ -79,6 +85,9 @@ async function getUsers(){
 
 
 <style>
+    * {
+        transition-duration: 0.2s;
+    }
     nav {
         display: grid;
         grid-template-columns: 10fr 20fr 10fr;
@@ -142,11 +151,20 @@ async function getUsers(){
         justify-content: space-around;
         height: 100%;
     }
+    .center .hovertab{
+        margin-top: 20px;
+        width: 45%;
+        height: 90%;
+        border-radius: 20%;
+    }
+    .center .hovertab:hover{
+        background-color: #f3f3f3;
+    }
     .center .tab {
         width: 100%;
         height: 100%;
         align-items: flex-end
-    } 
+    }
     .center .tab i {
         font-size: 1.5rem;
         color: rgb(128, 128, 128) 
@@ -170,6 +188,8 @@ async function getUsers(){
         width: 3rem;
         background-color: rgb(212, 212, 212);
         border-radius: 30px;
-        
+    }
+    .right div:hover {
+        background-color: rgb(188, 188, 188);
     }
 </style>
