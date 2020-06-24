@@ -100,6 +100,19 @@ async function getUsers(){
         background: white;
         box-shadow: 0 1px 7px rgba(143, 143, 143, 0.12)
     }
+    input {
+        width: 100%;
+        height: 1.4em;
+        padding: 0px 0.3rem;
+        background: #f3f3f3;
+        font-weight: inherit;
+        font-size: inherit;
+        font-family: inherit;
+
+        border-radius: 2rem;
+        border: none;
+        outline: none;
+    } 
     nav div {
         display: grid;
         align-items: center;
