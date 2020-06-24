@@ -26,7 +26,6 @@
 
 <main>
 	<Nav />
-	<div>{$profile_store.firstName} {$profile_store.lastName}</div>
 	<div>
 		<Left />
 	{#if $posts_store}

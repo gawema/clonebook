@@ -1,15 +1,16 @@
 <script>
   import {me} from "../store.js"
   //  allow to inject content to the variable
-  export let id
-  $: name = $me.friends.find( jFriend => jFriend.id == id ).name
-  $: status = $me.friends.find( jFriend=>jFriend.id==id ).status
+  // export let id
+  // $: name = $me.friends.find( jFriend => jFriend.id == id ).name
+  // $: status = $me.friends.find( jFriend=>jFriend.id==id ).status
 </script>
 
 <!-- ############################## -->
 
-<section class="friend" style="border-color:{status==1?'green':'black'};">
-  {name}
+<section class="friend" style="border-color:'black'};">
+<!-- <section class="friend" style="border-color:{status==1?'green':'black'};"> -->
+  <!-- {name} -->
 </section>
 
 <!-- ############################## -->
