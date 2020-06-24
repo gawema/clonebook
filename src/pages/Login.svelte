@@ -1,15 +1,28 @@
 <script>
-import { profile } from "./../store.js";
-import {login} from "../auth.js"
+import { profile_store } from "./../store.js";
+import { login } from "../auth.js"
+import { getProfile } from "../data.js"
+import { onMount } from "svelte"
+
+onMount(() => {
+	checkSession();
+});
 
 
-  const onLogin = async e => {
-    e.preventDefault();
-    let data = new FormData(e.target);
+const checkSession = async () => {
+	let response = await getProfile();
+	if (response) {
+		location.href = `/`;
+	}
+};
+
+const onLogin = async e => {
+	e.preventDefault();
+	let data = new FormData(e.target);
 	let response = await login(data)
-    localStorage.setItem("token", response.token);
-    location.href = `/`;
-  };
+	localStorage.setItem("token", response.token);
+	location.href = `/`;
+};
 </script>
 
 <style>

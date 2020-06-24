@@ -4,23 +4,21 @@
 	import Left from '../sections/Left.svelte'
 	import Right from '../sections/Right.svelte'
 	import { onMount } from "svelte"
-	import {me} from "../store.js"
-	import {post_store} from "../store.js"
-	import {getPosts} from "../data.js"
+	import { profile_store } from "../store.js"
+	import { posts_store } from "../store.js"
+	import { getPosts, getProfile} from "../data.js"
 
-
-	let posts = [];
 	onMount(() => {
 		storePosts();
+		storeProfile();
 	});
 
 	async function storePosts() {
-		$post_store = await getPosts();
+		$posts_store = await getPosts();
 	}
-	
-	post_store.subscribe(data => {
-		posts = data;
-	})
+	async function storeProfile() {
+		$profile_store = await getProfile();
+	}
 
 </script>
 
@@ -28,11 +26,11 @@
 
 <main>
 	<Nav />
-	<div>{$me.name} {$me.lastName}</div>
+	<div>{$profile_store.firstName} {$profile_store.lastName}</div>
 	<div>
 		<Left />
-	{#if posts}
-		<Timeline posts={posts}/>
+	{#if $posts_store}
+		<Timeline posts={$posts_store}/>
 	{/if}
 		<Right />
 	</div>

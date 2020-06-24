@@ -58,6 +58,15 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+router.get('/profile', tokenizer.verifyToken, async (req, res) => {
+	const user = await tokenizer.getUserByToken(req);
+	res.send({
+			firstName: user.firstName,
+			lastName: user.lastName,
+			photo: user.photo
+	})
+})
+
 router.get('/', tokenizer.verifyToken, (req,res) => {
 	User.find((err, users)=> {
 		if(err){console.log(err); return}

@@ -11,5 +11,6 @@ export let me = writable(
     ]
   }
 )
+export let profile_store = writable({});
 
-export let post_store = writable([]);
+export let posts_store = writable([]);
