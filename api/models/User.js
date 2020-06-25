@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 
 const publicDataSchema = mongoose.Schema(
 	{
+		userId: mongoose.Schema.Types.ObjectId,
 		firstName: String,
 		lastName: String,
 		photo: String,
 		status: Number,
-	}
+	},
+	{ _id: false }
 );
 
 const chatSchema = mongoose.Schema({
@@ -17,19 +19,25 @@ const chatSchema = mongoose.Schema({
 
 const friendSchema = mongoose.Schema(
 	{
-	  firstName: String,
-	  lastName: String,
-	  photo: String,
-	  status: Number,
-	  yourFriend: String,
-	  chat: [chatSchema],
-	}
+		publicData: publicDataSchema,
+		friendshipStatus: String,
+		chat: [chatSchema],
+	},
+	{ _id: false }
   );  
 
 const postSchema = mongoose.Schema({
 	text: String,
 	image: String,
 	likes: Number,
+	timestamp: { type: Date, default: Date.now },
+});
+
+const notificationSchema = mongoose.Schema({
+	type: String,
+	message: String,
+	user: publicDataSchema,
+	timestamp: { type: Date, default: Date.now },
 });
 
 const userSchema = mongoose.Schema({
@@ -43,6 +51,7 @@ const userSchema = mongoose.Schema({
 	posts: [postSchema],
 	friends: [friendSchema],
 	publicData: publicDataSchema,
+	notifications: [notificationSchema],
 });
 
   module.exports = mongoose.model('User', userSchema);

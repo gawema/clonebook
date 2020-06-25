@@ -2,24 +2,35 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User")
 const tokenizer =  require('../utils/tokenizer')
+const mongoose = require("mongoose");
 
 
-//ROUTES
+//NEW USER
 router.post('/signup', async (req, res) => {
 	try {
 		User.findOne({ email: req.body.email }, async (err, result) => {
-
 			if (result !== null) {
 				return res.status(500).send("User already exists!");
 			}
-
 			const salt = await bcrypt.genSalt();
 			const hashPassword = await bcrypt.hash(req.body.password, salt)
+			const userId = new mongoose.Types.ObjectId();
+			console.log(userId);
 			const user = new User({
+				_id: userId,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
 				password: hashPassword,
+				photo: '',
+				status: 0,
+				publicData: {
+					userId: userId,
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
+					photo: '',
+					status: 0,
+				}
 			});
 			user.save()
 			.then(result => {
@@ -37,6 +48,7 @@ router.post('/signup', async (req, res) => {
 	}
 })
 
+//LOGIN
 router.post('/login', async (req, res) => {
 	try {
 		User.findOne({'email': req.body.email}, async (err, user) => {
@@ -58,15 +70,22 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+//GET PROFILE
 router.get('/profile', tokenizer.verifyToken, async (req, res) => {
-	const user = await tokenizer.getUserByToken(req);
-	res.send({
-			firstName: user.firstName,
-			lastName: user.lastName,
-			photo: user.photo
-	})
+	try {
+		const user = await tokenizer.getUserByToken(req);
+		User.findById(user._id, (error, result) => {
+			if(error || !result){ console.log(error); return res.sendStatus(404); }	
+			return res.send(user.publicData);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+
+
 })
 
+// ALL USERS - TESTING ONLY
 router.get('/', tokenizer.verifyToken, (req,res) => {
 	User.find((err, users)=> {
 		if(err){console.log(err); return}
@@ -74,6 +93,7 @@ router.get('/', tokenizer.verifyToken, (req,res) => {
 	});
 })
 
+// SPECIFIC USERS - TESTING ONLY
 router.get('/:userId', tokenizer.verifyToken, (req,res) => {
 	const id = new require('mongodb').ObjectID(req.params.userId);
 	User.findOne({'_id': id}, (err, dbres) => {
@@ -81,6 +101,7 @@ router.get('/:userId', tokenizer.verifyToken, (req,res) => {
 	})
 })
 
+// EDIT USERS - TESTING ONLY
 router.patch('/', tokenizer.verifyToken, async (req, res) => {
 	const user = await tokenizer.getUserByToken(req);
 	const id = new require('mongodb').ObjectID(user._id);
@@ -93,6 +114,7 @@ router.patch('/', tokenizer.verifyToken, async (req, res) => {
 	});
 })
 
+// DELETE USERS - TESTING ONLY
 router.delete('/', tokenizer.verifyToken, async (req,res) => {
 	const user = await tokenizer.getUserByToken(req);
 	const id = new require('mongodb').ObjectID(user._id);

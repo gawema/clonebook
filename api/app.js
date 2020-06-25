@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const cors = require('cors')
 const userRoute = require('./routes/user');
 const postRoute = require('./routes/post');
+const friendRoute = require('./routes/friend');
+const chatRoute = require('./routes/chat');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(cors())
 app.use(express.json()) // alternative to body-parser
 app.use('/users', userRoute);
 app.use('/posts', postRoute);
+app.use('/friends', friendRoute);
+app.use('/chats', chatRoute);
 
 
 //CONNECT TO DB WITH MONGOOSE
