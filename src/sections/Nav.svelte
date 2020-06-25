@@ -1,94 +1,29 @@
 <script>
-let txtSearch = "";
-let ajUsers = []
-let boxSearchResultsDisplay = "none";
-function showSearchResults() {
-    boxSearchResultsDisplay = "grid";
-}
-function hideSearchResults(){
-    boxSearchResultsDisplay = "none";
-}
-    
-// Async - because it will take time to get the data
-async function getUsers(){
-    ajUsers = []
-    // AWAIT So it wont go though before it has the data - because it will take time
-    let connection = await fetch("http://localhost:88/users?searchFor="+txtSearch);
-    let data = await connection.json()
-    // Put it into the array
-    ajUsers = data;
-    // Calling the showSearchResults function, to show the searchcontainer
-    showSearchResults()
-    // Shows what we search for in the console
-    console.log(data)
-    
- }
+  import IconThumbnail from "../components/IconThumbnail.svelte";
+  import SearchBar from "../components/SearchBar.svelte";
+  import NavSocialIcons from "../components/NavSocialActions.svelte";
+  export let segment;
+
+  import { onMount } from "svelte";
+
+  import { profile } from "../store.js";
+
+  onMount(() => {
+    if (!localStorage.getItem("token")) {
+      showNav = false;
+    }
+  });
+
+  let showNav = true;
 </script>
-
-
-<!-- ########################################## -->
-
-<nav>
-    <div class="nav left">
-        <div class="icon">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-        </div>
-        <div class="searchbar">
-            <form>
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Seach on Clonebook ..." bind:value="{txtSearch}" on:input="{getUsers}" on:focus="{getUsers}" on:blur="{hideSearchResults}">
-            </form>
-            <div style="display: {boxSearchResultsDisplay}" class="results">
-                {#each ajUsers as jUser }
-                    <div>{jUser.name} {jUser.lastName}</div>
-                {/each }
-            </div>
-        </div>
-    </div> 
-    <div class="nav center">
-        <div class="tab">
-            <div class="hovertab">
-                <i class="fas fa-house-user"style="color: rgb(79, 207, 197);"></i>            
-            </div>
-            <div class="active" style="opacity: 1"></div>
-        </div>
-        <div class="tab">
-            <div class="hovertab">
-                <i class="fas fa-shopping-basket" style="color: rgb(128, 128, 128)"></i>
-            </div>
-            <div class="active" style="opacity: 0"></div></div>
-        <div class="tab">
-            <div class="hovertab">
-                <i class="fas fa-users" style="color: rgb(128, 128, 128)"></i>
-            </div>
-            <div class="active" style="opacity: 0"></div>
-        </div>
-    </div>
-    <div class="nav right"> 
-        <div>
-            <i class="fas fa-plus"></i>
-        </div>
-        <div>
-            <i class="far fa-comment-alt"></i>
-        </div>
-        <div>
-            <i class="far fa-bell"></i>
-        </div>
-        <div>
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-        </div>
-    </div>
-</nav> 
-
-
-<!-- ########################################## -->
-
 
 <style>
     * {
         transition-duration: 0.2s;
     }
     nav {
+        position: fixed;
+        z-index: 1;
         display: grid;
         grid-template-columns: 10fr 20fr 10fr;
         grid-gap: 0.2rem;
@@ -100,19 +35,6 @@ async function getUsers(){
         background: white;
         box-shadow: 0 1px 7px rgba(143, 143, 143, 0.12)
     }
-    input {
-        width: 100%;
-        height: 1.4em;
-        padding: 0px 0.3rem;
-        background: #f3f3f3;
-        font-weight: inherit;
-        font-size: inherit;
-        font-family: inherit;
-
-        border-radius: 2rem;
-        border: none;
-        outline: none;
-    } 
     nav div {
         display: grid;
         align-items: center;
@@ -124,7 +46,7 @@ async function getUsers(){
         grid-gap: 0.5rem
     }
     .left .icon {
-        background-color: rgb(79, 207, 197);
+        background-color: #6075fb;
         color: white;
         font-size: 1.5rem;
         display: grid;
@@ -133,31 +55,6 @@ async function getUsers(){
         border-radius: 30px;
         height: 3.3rem;
         width: 3.3rem;
-    }
-    .left .searchbar {
-        width: 100%;
-        justify-content: stretch;
-    }
-    .searchbar i {
-        position: absolute;
-        margin: 1.2rem;
-        font-size: 1rem;
-        color: rgb(138, 137, 137)
-    }
-    .searchbar input {
-        padding-left: 4rem;
-        height: 3.3rem;
-    }
-    .searchbar .results {
-        position: absolute;
-        width: 100%;
-        height: 10rem;
-        background: white;
-        color: #333;
-        border: 1px solid #999;
-        border-top: none;
-        padding: 0px 0.2rem;
-        
     }
     .center {
         display: flex;
@@ -185,24 +82,66 @@ async function getUsers(){
     .center .tab .active{
         height: 3px;
         width: 140px;
-        background: rgb(79, 207, 197);
+        background: #6075fb;
         border-radius: 2px 2px 0 0
     }
-    .right {
-        display: grid;
-        grid-template-columns:  1fr 1fr 1fr 1fr;
-        column-gap: 2rem;
-        margin: 0 3rem 0 auto;
-        font-size: 1.2rem;
-        color: #333
-    }
-    .right div {
-        height: 3rem;
-        width: 3rem;
-        background-color: rgb(212, 212, 212);
-        border-radius: 30px;
-    }
-    .right div:hover {
-        background-color: rgb(188, 188, 188);
-    }
+
 </style>
+
+{#if showNav}
+  <nav>
+      <div class="nav left">
+          <div class="icon">
+                <a aria-current="{segment === undefined ? 'page' : undefined}" href=".">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+          </div>
+          <SearchBar />
+      </div> 
+      <div class="nav center">
+          <div class="tab">
+              <div class="hovertab">
+                 <a href=".">
+                    <i class="fas fa-house-user" style="color: {segment === undefined ? '#6075fb' : 'rgb(128, 128, 128)'}" ></i>     
+                </a>       
+              </div>
+              <div class="active" style="opacity: {segment === undefined ? '1' : '0'}"></div>
+          </div>
+          <div class="tab">
+              <div class="hovertab">
+                <a href="/marketplace">
+                  <i class="fas fa-shopping-basket" style="color: {segment === 'marketplace' ? '#6075fb' : 'rgb(128, 128, 128)'}"></i>
+                </a>
+              </div>
+              <div class="active" style="opacity: {segment === 'marketplace' ? '1' : '0'}"></div></div>
+          <div class="tab">
+              <div class="hovertab">
+                <a href="/groups">
+                  <i class="fas fa-users" style="color: {segment === 'groups' ? '#6075fb' : 'rgb(128, 128, 128)'}"></i>
+                </a>
+              </div>
+              <div class="active" style="opacity: {segment === 'groups' ? '1' : '0'}"></div>
+          </div>
+      </div>
+      <div class="center grid gap-4">
+        <div class="flex items-center justify-center">
+          <a href={'/profilepage'}>
+            <div class="profileIcon grid grid-cols-2 gap-2 rounded-full p-2 cursor-pointer">
+              <div class="flex items-center justify-center flex-center">
+                <IconThumbnail photoUrl={$profile.photo} width="2.5rem" />
+              </div>
+              <div class="flex items-center justify-center flex-center">
+                <p>{$profile.firstName}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div>
+          <NavSocialIcons />
+        </div>
+      </div>
+  </nav> 
+{/if}
+
+
+

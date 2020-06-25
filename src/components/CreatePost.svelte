@@ -1,40 +1,17 @@
-<script>
+  <script>
+  import IconThumbnail from "../components/IconThumbnail.svelte";
+  import { profile, postModal } from "../store.js";
 
-
+  const onOpenModal = () => {
+    $postModal.show = true;
+  };
 </script>
 
-
-<!-- ########################################## -->
-
-<createPost>
-	<div class="pic"></div>
-	<div class="input" on:click> a cosa pensi??</div>
-	<div class="line"></div>
-	<div class="media">
-		<i class="fa fa-file-image-o"></i>
-		Photo/Video
-	</div>
-	<div class="tag">
-		<i class="fas fa-user-tag"></i>
-		Tag Friend
-	</div>
-	<div class="feeling">
-		<i class="fas fa-shoe-prints"></i>
-		Feeling/Activity
-	</div>
-</createPost> 
-
-
-<!-- ########################################## -->
-
-
 <style>
-
-	createPost {
-		width: 90%;
+  	createPost {
+		width: 100%;
 		background-color: white;
 		border-radius: 20px;	
-		margin: 20px;
 		padding: 1.3rem;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 		display: grid;
@@ -100,3 +77,24 @@
 	}
 
 </style>
+  
+
+  <createPost>
+	<div class="pic">
+	    <IconThumbnail photoUrl={$profile.photo} />
+	</div>
+	<div class="input" on:click={onOpenModal}> What's on your mind, {$profile.firstName}?</div>
+	<div class="line"></div>
+	<div class="media">
+		<i class="fa fa-file-image-o"></i>
+		Photo/Video
+	</div>
+	<div class="tag">
+		<i class="fas fa-user-tag"></i>
+		Tag Friend
+	</div>
+	<div class="feeling">
+		<i class="fas fa-shoe-prints"></i>
+		Feeling/Activity
+	</div>
+</createPost> 

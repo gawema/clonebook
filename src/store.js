@@ -1,16 +1,32 @@
-import {writable} from "svelte/store"
-export let me = writable(
-  {
-    "name":"Gabriele",
-    "lastName":"Mannucci",
-    "friends":
-    [
-      {"id":111, "name":"A", "status":1},
-      {"id":222, "name":"B", "status":0},
-      {"id":333, "name":"C", "status":1},
-    ]
-  }
-)
-export let profile_store = writable({});
+import { writable } from "svelte/store";
 
-export let posts_store = writable([]);
+
+export let users = writable([]);
+
+export let profile = writable({
+  id: 1,
+  firstName: "",
+  lastName: "",
+  photo: "",
+  username: "",
+  status: 0,
+  public_json: {
+    id: 0,
+    firstName: "0",
+    lastName: "0",
+    photo: "",
+    status: 0,
+    username: "",
+  },
+  posts: [],
+  friends: [],
+  activeChats: [],
+  notifications: [],
+});
+
+export let storePosts = writable([]);
+
+export let postModal = writable({
+  show: false,
+  postData: undefined,
+});

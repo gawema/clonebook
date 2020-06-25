@@ -1,28 +1,17 @@
 <script>
-  import {me} from "../store.js"
-  //  allow to inject content to the variable
-  // export let id
-  // $: name = $me.friends.find( jFriend => jFriend.id == id ).name
-  // $: status = $me.friends.find( jFriend=>jFriend.id==id ).status
+  export let status;
+  export let photoUrl;
 </script>
 
-<!-- ############################## -->
-
-<section class="friend" style="border-color:'black'};">
-<!-- <section class="friend" style="border-color:{status==1?'green':'black'};"> -->
-  <!-- {name} -->
-</section>
-
-<!-- ############################## -->
-
 <style>
-		.friend{
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    width: 2rem;
-    height: 2rem;
-    border: 2px solid black;
-    border-radius: 50%;
+  .status {
+    border: 2px solid gray;
+    box-sizing: content-box;
   }
 </style>
+
+<section>
+  <div class="status relative h-8 w-8 rounded-full" style={status === 0 ? 'border-color: gray;' : 'border-color: green;'}>
+    <img src={photoUrl} class="h-8 w-8 rounded-full" alt="profile" />
+  </div>
+</section>
